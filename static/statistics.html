@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>점수별 통계보기 | 컴퓨터활용능력 2급 실기 채점프로그램</title>
+  <link rel="stylesheet" href="/static/css/common.css">
+  <link rel="stylesheet" href="/static/css/statistics-page.css">
+  <script type="module" src="/static/js/nav.js"></script>
+  <script type="module" src="/static/js/auth.js"></script>
+  <script type="module" src="/static/js/statistics-page.js"></script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link visually-hidden">본문 바로가기</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo">
+        <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="18" height="18" rx="3"></rect>
+          <path d="M9 12l2 2 4-4"></path>
+        </svg>
+        <span>컴활 2급 실기 채점</span>
+      </a>
+
+      <div class="header-right">
+        <div id="auth-header-controls" class="auth-header-controls"></div>
+
+        <nav class="site-nav" aria-label="주 메뉴">
+          <button type="button" class="menu-button" popovertarget="site-menu" popovertargetaction="toggle" aria-controls="site-menu" aria-label="메뉴 열기">
+            <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+            <span>메뉴</span>
+          </button>
+
+          <ul id="site-menu" class="site-menu" popover="auto">
+            <li><a href="/">채점프로그램 Home</a></li>
+            <li><a href="/history">내 점수 이력</a></li>
+            <li><a href="/statistics" aria-current="page">점수별 통계보기</a></li>
+            <li><a href="/criteria">채점기준 및 도움말</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content" class="page-main">
+    <section class="card stats-toolbar" aria-labelledby="stats-page-title">
+      <div class="toolbar-top">
+        <div class="toolbar-heading">
+          <h1 id="stats-page-title" class="page-title">회차별 점수 분포 및 문제 비율 통계</h1>
+          <p id="stats-exam-subtitle" class="page-subtitle">선택한 회차의 총점 및 문제별 점수 분포와 내 점수 위치를 확인할 수 있습니다.</p>
+        </div>
+
+        <div class="toolbar-actions">
+          <form id="stats-filter-form" class="stats-filter-form">
+            <div class="filter-field">
+              <label for="stats-exam-select" class="filter-label">회차 선택</label>
+              <select id="stats-exam-select" name="exam_id" class="filter-select">
+                <option value="sample_01">샘플 1회 모의고사</option>
+              </select>
+            </div>
+            <button type="submit" id="stats-query-btn" class="btn btn-primary">조회</button>
+          </form>
+
+          <a href="/" class="btn btn-secondary">채점 화면으로 돌아가기</a>
+        </div>
+      </div>
+
+      <div class="kpi-strip" aria-live="polite">
+        <div class="kpi-pill">
+          <span class="kpi-label">전체 응시자 수</span>
+          <strong id="kpi-participants" class="kpi-value">-</strong>
+        </div>
+        <div class="kpi-pill">
+          <span class="kpi-label">전체 평균 점수</span>
+          <strong id="kpi-average" class="kpi-value">-</strong>
+        </div>
+        <div class="kpi-pill kpi-pill--my">
+          <span class="kpi-label">내 점수 요약</span>
+          <strong id="kpi-my-summary" class="kpi-value">미지정 (채점 후 연동 시 강조 표시)</strong>
+        </div>
+      </div>
+    </section>
+
+    <div id="stats-status" class="stats-status" role="status" aria-live="polite" hidden></div>
+
+    <div id="charts-container" class="charts-layout">
+      <section class="card chart-card chart-card--featured" id="chart-section-total" aria-labelledby="chart-heading-total">
+        <div class="card-header">
+          <div class="chart-title-group">
+            <h2 id="chart-heading-total" class="card-title">해당 회차의 총점수 비율(명)</h2>
+            <span class="chart-badge">총점 100점 만점</span>
+          </div>
+          <button
+            type="button"
+            class="btn btn-secondary btn-compact table-toggle-btn"
+            data-target="table-panel-total"
+            aria-expanded="false"
+            aria-controls="table-panel-total"
+          >
+            데이터 표 보기
+          </button>
+        </div>
+        <div class="chart-body" id="chart-body-total"></div>
+      </section>
+
+      <div class="problems-grid">
+        <section class="card chart-card" id="chart-section-problem1" aria-labelledby="chart-heading-problem1">
+          <div class="card-header">
+            <div class="chart-title-group">
+              <h2 id="chart-heading-problem1" class="card-title">문제1 비율(명)</h2>
+              <span class="chart-badge">기본작업 · 20점 만점</span>
+            </div>
+            <button
+              type="button"
+              class="btn btn-secondary btn-compact table-toggle-btn"
+              data-target="table-panel-problem1"
+              aria-expanded="false"
+              aria-controls="table-panel-problem1"
+            >
+              데이터 표 보기
+            </button>
+          </div>
+          <div class="chart-body" id="chart-body-problem1"></div>
+        </section>
+
+        <section class="card chart-card" id="chart-section-problem2" aria-labelledby="chart-heading-problem2">
+          <div class="card-header">
+            <div class="chart-title-group">
+              <h2 id="chart-heading-problem2" class="card-title">문제2 비율(명)</h2>
+              <span class="chart-badge">계산작업 · 40점 만점</span>
+            </div>
+            <button
+              type="button"
+              class="btn btn-secondary btn-compact table-toggle-btn"
+              data-target="table-panel-problem2"
+              aria-expanded="false"
+              aria-controls="table-panel-problem2"
+            >
+              데이터 표 보기
+            </button>
+          </div>
+          <div class="chart-body" id="chart-body-problem2"></div>
+        </section>
+
+        <section class="card chart-card" id="chart-section-problem3" aria-labelledby="chart-heading-problem3">
+          <div class="card-header">
+            <div class="chart-title-group">
+              <h2 id="chart-heading-problem3" class="card-title">문제3 비율(명)</h2>
+              <span class="chart-badge">분석작업 · 20점 만점</span>
+            </div>
+            <button
+              type="button"
+              class="btn btn-secondary btn-compact table-toggle-btn"
+              data-target="table-panel-problem3"
+              aria-expanded="false"
+              aria-controls="table-panel-problem3"
+            >
+              데이터 표 보기
+            </button>
+          </div>
+          <div class="chart-body" id="chart-body-problem3"></div>
+        </section>
+
+        <section class="card chart-card" id="chart-section-problem4" aria-labelledby="chart-heading-problem4">
+          <div class="card-header">
+            <div class="chart-title-group">
+              <h2 id="chart-heading-problem4" class="card-title">문제4 비율(명)</h2>
+              <span class="chart-badge">기타작업 · 20점 만점</span>
+            </div>
+            <button
+              type="button"
+              class="btn btn-secondary btn-compact table-toggle-btn"
+              data-target="table-panel-problem4"
+              aria-expanded="false"
+              aria-controls="table-panel-problem4"
+            >
+              데이터 표 보기
+            </button>
+          </div>
+          <div class="chart-body" id="chart-body-problem4"></div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>컴퓨터활용능력 2급 실기 채점프로그램 · 로컬 자동 채점 및 통계 분석</p>
+  </footer>
+</body>
+</html>

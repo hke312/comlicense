@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>채점프로그램 Home | 컴퓨터활용능력 2급 실기 채점 프로그램</title>
+  <link rel="stylesheet" href="/static/css/common.css">
+  <link rel="stylesheet" href="/static/css/main-page.css">
+  <script type="module" src="/static/js/nav.js"></script>
+  <script type="module" src="/static/js/auth.js"></script>
+  <script type="module" src="/static/js/main-page.js"></script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link visually-hidden">본문 바로가기</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo">
+        <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="18" height="18" rx="3"></rect>
+          <path d="M9 12l2 2 4-4"></path>
+        </svg>
+        <span>컴활 2급 실기 채점</span>
+      </a>
+
+      <div class="header-right">
+        <div id="auth-header-controls" class="auth-header-controls"></div>
+
+        <nav class="site-nav" aria-label="주 메뉴">
+          <button type="button" class="menu-button" popovertarget="site-menu" popovertargetaction="toggle" aria-controls="site-menu" aria-label="메뉴 열기">
+            <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+            <span>메뉴</span>
+          </button>
+
+          <ul id="site-menu" class="site-menu" popover="auto">
+            <li><a href="/" aria-current="page">채점프로그램 Home</a></li>
+            <li><a href="/history">내 점수 이력</a></li>
+            <li><a href="/statistics">점수별 통계보기</a></li>
+            <li><a href="/criteria">채점기준 및 도움말</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content" class="page-main">
+    <div class="page-intro">
+      <h1 class="page-title">컴퓨터활용능력 2급 실기 채점 프로그램</h1>
+      <p class="page-subtitle">회차를 선택하고 작성한 엑셀 답안(.xlsx, .xlsm)을 업로드하면 작업별 점수와 감점 상세 내역을 즉시 채점합니다.</p>
+    </div>
+
+    <!-- 1. 사이트 유의사항 배너 카드 -->
+    <section id="notice-banner" class="card notice-banner no-print" aria-labelledby="notice-heading">
+      <div class="book-cover" aria-hidden="true">
+        <div class="book-cover-spine"></div>
+        <div class="book-cover-face">
+          <span class="book-badge">2026 최신판</span>
+          <span class="book-label">컴퓨터활용능력</span>
+          <strong class="book-level">2급 실기</strong>
+          <span class="book-year">26</span>
+          <svg class="book-grid-svg" viewBox="0 0 64 28" fill="none">
+            <rect x="1" y="1" width="62" height="26" rx="3" stroke="currentColor" stroke-opacity="0.45" stroke-width="1.2"></rect>
+            <line x1="21" y1="1" x2="21" y2="27" stroke="currentColor" stroke-opacity="0.35"></line>
+            <line x1="42" y1="1" x2="42" y2="27" stroke="currentColor" stroke-opacity="0.35"></line>
+            <line x1="1" y1="10" x2="63" y2="10" stroke="currentColor" stroke-opacity="0.35"></line>
+            <line x1="1" y1="19" x2="63" y2="19" stroke="currentColor" stroke-opacity="0.35"></line>
+          </svg>
+        </div>
+      </div>
+
+      <div class="notice-body">
+        <div class="notice-head">
+          <h2 id="notice-heading" class="notice-title">
+            <span class="notice-pill">안내</span>
+            사이트 유의사항 및 채점 안내
+          </h2>
+          <button type="button" id="dismiss-notice-btn" class="notice-close" aria-label="사이트 유의사항 배너 닫기">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <ul class="notice-list">
+          <li>본 프로그램은 <strong>대한상공회의소 컴퓨터활용능력 2급 실기 채점 기준</strong>을 반영하여 기본·계산·분석·기타 작업을 자동 채점합니다.</li>
+          <li>수식, 조건부 서식, 피벗테이블, 차트 변경 사항이 누락되지 않도록 엑셀에서 <strong>반드시 저장 후 닫은 파일(.xlsx/.xlsm)</strong>을 업로드해 주세요.</li>
+          <li>채점 결과에 이상이 있거나 오채점이 의심되는 경우 <a href="/criteria">채점기준 및 도움말</a>에서 세부 기준과 오류 제보 안내를 확인해 주세요.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 2. 2열 메인 작업 그리드 -->
+    <div class="grading-grid">
+      <!-- 왼쪽 열: 문제 유형 선택 + 작업별 상세 점수 -->
+      <div class="grading-left">
+        <section class="card form-card" aria-labelledby="form-card-heading">
+          <div class="card-header">
+            <h2 id="form-card-heading" class="card-title">
+              <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+              </svg>
+              <span>문제 유형 선택</span>
+            </h2>
+            <span id="exam-type-badge" class="soft-badge">대표 기출</span>
+          </div>
+
+          <form id="grading-form" novalidate>
+            <!-- 회차 선택 -->
+            <div class="form-row">
+              <label for="exam-select" class="field-label">회차 선택</label>
+              <select id="exam-select" name="exam_id" class="form-control" required data-error="exam-select-error">
+                <option value="sample_01">대표기출따라하기</option>
+              </select>
+              <span id="exam-select-error" class="field-error" hidden>채점할 회차를 선택해 주세요.</span>
+            </div>
+
+            <!-- 문제 파일 -->
+            <div class="form-row">
+              <span id="question-file-label" class="field-label">문제 파일</span>
+              <div class="download-actions" role="group" aria-labelledby="question-file-label">
+                <a id="view-problem-btn" class="btn btn-secondary btn-compact" href="/api/exams/sample_01/problem-sheet" target="_blank" rel="noopener">
+                  <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                  </svg>
+                  <span>문제지 보기</span>
+                </a>
+                <a id="download-exam-btn" class="btn btn-secondary btn-compact" href="/api/exams/sample_01/download" download>
+                  <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                  </svg>
+                  <span>해당회차 다운</span>
+                </a>
+                <a id="download-all-btn" class="btn btn-dark btn-compact" href="/api/exams/download-all" download>
+                  <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 8v13H3V8"></path>
+                    <path d="M1 3h22v5H1z"></path>
+                    <path d="M10 12h4"></path>
+                  </svg>
+                  <span>전체 다운 (ZIP)</span>
+                </a>
+              </div>
+              <p id="exam-description-hint" class="field-hint">해당회차 다운 시 문제지(HTML)와 실습 파일(.xlsm)이 함께 ZIP으로 내려받아집니다.</p>
+            </div>
+
+            <!-- 정보 입력 -->
+            <div class="form-row">
+              <span class="field-label">정보 입력</span>
+              <div id="auth-inline-strip" class="auth-inline-strip" aria-live="polite">
+                <span class="auth-inline-text">로그인하면 채점 점수가 내 이력에 자동 기록됩니다.</span>
+                <button type="button" id="inline-login-btn" class="btn btn-secondary btn-sm">로그인 / 가입</button>
+              </div>
+              <div class="identity-grid">
+                <div class="field-group">
+                  <label for="teacher-id" class="sub-label">선생님 코드 (선택)</label>
+                  <input
+                    type="text"
+                    id="teacher-id"
+                    name="teacher_id"
+                    class="form-control"
+                    maxlength="30"
+                    autocomplete="off"
+                    autocorrect="off"
+                    autocapitalize="none"
+                    spellcheck="false"
+                    enterkeyhint="next"
+                    placeholder="예: teacher01"
+                    data-error="teacher-id-error"
+                  >
+                  <span id="teacher-id-error" class="field-error" hidden>선생님 코드를 확인해 주세요.</span>
+                </div>
+
+                <div class="field-group">
+                  <label for="student-nickname" class="sub-label">학생 닉네임 <span class="req-mark" aria-hidden="true">*</span></label>
+                  <input
+                    type="text"
+                    id="student-nickname"
+                    name="student_nickname"
+                    class="form-control"
+                    required
+                    maxlength="30"
+                    autocomplete="nickname"
+                    enterkeyhint="done"
+                    placeholder="예: 코딩거북이 (실명 제외)"
+                    data-error="student-nickname-error"
+                  >
+                  <span id="student-nickname-error" class="field-error" hidden>학생 닉네임을 입력해 주세요.</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 작성 파일 -->
+            <div class="form-row">
+              <label for="excel-file" class="field-label">작성 파일 <span class="req-mark" aria-hidden="true">*</span></label>
+              <span id="file-format-hint" class="field-hint">지원 형식: .xlsx, .xlsm (최대 20MB)</span>
+              <div id="file-dropzone" class="dropzone">
+                <input
+                  type="file"
+                  id="excel-file"
+                  name="file"
+                  class="dropzone-input visually-hidden"
+                  accept=".xlsx,.xlsm"
+                  required
+                  aria-describedby="file-format-hint"
+                  data-error="file-error-msg"
+                >
+                <label for="excel-file" class="dropzone-label">
+                  <svg class="dropzone-icon" aria-hidden="true" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17 8 12 3 7 8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                  </svg>
+                  <span class="dropzone-title">엑셀 파일을 끌어다 놓거나 클릭하여 선택하세요</span>
+                  <span id="selected-file-name" class="dropzone-filename">선택된 파일 없음</span>
+                </label>
+              </div>
+              <span id="file-error-msg" class="field-error" hidden>채점할 .xlsx 또는 .xlsm 파일을 선택해 주세요.</span>
+              <div id="file-validation-status" class="field-status" aria-live="polite"></div>
+            </div>
+
+            <!-- 하단 액션 행 -->
+            <div class="form-actions no-print">
+              <span class="waiting-badge" id="waiting-badge">대기자 <strong id="waiting-count">0</strong></span>
+              <div class="action-buttons">
+                <button type="submit" id="grade-submit-btn" class="btn btn-primary">
+                  <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                  </svg>
+                  <span>채점시작</span>
+                </button>
+                <button type="button" id="print-btn" class="btn btn-secondary">
+                  <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                    <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                    <rect x="6" y="14" width="12" height="8"></rect>
+                  </svg>
+                  <span>인쇄</span>
+                </button>
+              </div>
+            </div>
+
+            <div id="grading-status" class="grading-status" role="status" aria-live="polite"></div>
+          </form>
+        </section>
+
+        <!-- 작업별 상세 점수 카드 -->
+        <section class="card scores-card" aria-labelledby="scores-heading">
+          <div class="card-header">
+            <h2 id="scores-heading" class="card-title">
+              <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 11l3 3L22 4"></path>
+                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+              </svg>
+              <span>작업별 상세 점수</span>
+            </h2>
+            <span id="graded-meta" class="graded-meta">채점 대기</span>
+          </div>
+
+          <ul class="score-list">
+            <li class="score-row">
+              <div class="score-label-wrap">
+                <span class="problem-badge">[문제1]</span>
+                <span class="problem-name">기본작업(20점)</span>
+              </div>
+              <output id="score-p1" class="score-box" for="exam-select excel-file">0 / 20</output>
+            </li>
+            <li class="score-row">
+              <div class="score-label-wrap">
+                <span class="problem-badge">[문제2]</span>
+                <span class="problem-name">계산작업(40점)</span>
+              </div>
+              <output id="score-p2" class="score-box" for="exam-select excel-file">0 / 40</output>
+            </li>
+            <li class="score-row">
+              <div class="score-label-wrap">
+                <span class="problem-badge">[문제3]</span>
+                <span class="problem-name">분석작업(20점)</span>
+              </div>
+              <output id="score-p3" class="score-box" for="exam-select excel-file">0 / 20</output>
+            </li>
+            <li class="score-row">
+              <div class="score-label-wrap">
+                <span class="problem-badge">[문제4]</span>
+                <span class="problem-name">기타작업(20점)</span>
+              </div>
+              <output id="score-p4" class="score-box" for="exam-select excel-file">0 / 20</output>
+            </li>
+          </ul>
+
+          <div class="total-score-card" id="total-score-card">
+            <div class="total-score-head">
+              <span class="total-score-label">TOTAL SCORE</span>
+              <span id="pass-status-pill" class="pass-pill is-neutral">70점 이상 합격</span>
+            </div>
+            <output id="score-total" class="total-score-value" for="exam-select excel-file">0 점</output>
+          </div>
+        </section>
+      </div>
+
+      <!-- 오른쪽 열: 감점 내역 및 분석 -->
+      <div class="grading-right">
+        <section class="card deduction-card" aria-labelledby="deduction-heading">
+          <div class="card-header deduction-header">
+            <h2 id="deduction-heading" class="card-title">
+              <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+              <span>감점 내역 및 분석</span>
+            </h2>
+            <div class="stat-pills" aria-live="polite">
+              <span class="stat-pill stat-pill-blue">인원: <strong id="participant-count">-</strong>명</span>
+              <span class="stat-pill stat-pill-teal">평균: <strong id="average-score">-</strong>점</span>
+            </div>
+          </div>
+
+          <div class="table-wrapper" tabindex="0" role="region" aria-labelledby="deduction-heading">
+            <table class="deduction-table">
+              <caption class="visually-hidden">작업별 감점 내역 및 오류 상세내용</caption>
+              <thead>
+                <tr>
+                  <th scope="col">문제번호</th>
+                  <th scope="col">작업내용</th>
+                  <th scope="col">감점</th>
+                  <th scope="col">오류 상세내용</th>
+                </tr>
+              </thead>
+              <tbody id="deduction-tbody">
+                <tr class="empty-row">
+                  <td colspan="4">
+                    작성한 엑셀 답안 파일을 업로드하고 <strong>채점시작</strong> 버튼을 누르면 작업별 감점 내역과 오류 상세내용이 이곳에 표시됩니다.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- 3. 중앙 버튼 바 -->
+    <div class="center-action-bar no-print">
+      <a id="stats-link" class="btn btn-stats" href="/statistics?exam_id=sample_01">
+        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="20" x2="18" y2="10"></line>
+          <line x1="12" y1="20" x2="12" y2="4"></line>
+          <line x1="6" y1="20" x2="6" y2="14"></line>
+        </svg>
+        <span>점수별 통계보기</span>
+      </a>
+      <button type="button" id="video-modal-btn" class="btn btn-video">
+        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="23 7 16 12 23 17 23 7"></polygon>
+          <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+        </svg>
+        <span>동영상 강좌</span>
+      </button>
+    </div>
+
+    <!-- 4. 하단 2열 누적점수 순위 그리드 -->
+    <div class="rankings-grid">
+      <section class="card ranking-card" aria-labelledby="student-ranking-heading">
+        <div class="card-header">
+          <h2 id="student-ranking-heading" class="card-title">학생 누적점수 순위</h2>
+          <span class="ranking-sub">상위 10명</span>
+        </div>
+        <div id="student-ranking-chart" class="ranking-chart-container" aria-live="polite">
+          <p class="ranking-loading">순위 데이터를 불러오는 중입니다...</p>
+        </div>
+      </section>
+
+      <section class="card ranking-card" aria-labelledby="teacher-ranking-heading">
+        <div class="card-header">
+          <h2 id="teacher-ranking-heading" class="card-title">선생님 누적점수 순위</h2>
+          <span class="ranking-sub">상위 5명 (평균 점수)</span>
+        </div>
+        <div id="teacher-ranking-chart" class="ranking-chart-container" aria-live="polite">
+          <p class="ranking-loading">순위 데이터를 불러오는 중입니다...</p>
+        </div>
+      </section>
+    </div>
+
+    <!-- 5. 하단 홍보/학습 안내 배너 -->
+    <aside class="card promo-banner no-print" aria-labelledby="promo-heading">
+      <div class="promo-content">
+        <span class="promo-eyebrow">실기 합격 70점 가이드</span>
+        <h2 id="promo-heading" class="promo-title">감점 항목과 작업별 채점 기준을 한눈에 확인해 보세요</h2>
+        <p class="promo-desc">기본작업 서식, 계산작업 함수 수식, 분석작업 피벗·부분합, 기타작업 매크로·차트 채점 규칙을 정리했습니다.</p>
+      </div>
+      <a href="/criteria" class="btn btn-primary promo-cta">채점기준 및 도움말</a>
+    </aside>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 컴퓨터활용능력 2급 실기 채점 프로그램</p>
+  </footer>
+
+  <!-- 동영상 강좌 안내 모달 (<dialog> + showModal()) -->
+  <dialog id="video-dialog" class="video-dialog" closedby="any" aria-labelledby="video-dialog-title">
+    <div class="dialog-panel">
+      <div class="dialog-header">
+        <h2 id="video-dialog-title" class="dialog-title">동영상 강좌 및 풀이 안내</h2>
+        <button type="button" id="video-dialog-close-x" class="dialog-close" aria-label="동영상 강좌 창 닫기">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div id="video-dialog-body" class="dialog-body"></div>
+      <form method="dialog" class="dialog-footer">
+        <button type="submit" value="close" class="btn btn-dark" autofocus>닫기</button>
+      </form>
+    </div>
+  </dialog>
+</body>
+</html>

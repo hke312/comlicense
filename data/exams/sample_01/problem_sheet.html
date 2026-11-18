@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>대표기출따라하기 문제지 | 컴퓨터활용능력 2급 실기</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --border: #cbd5e1;
+      --text: #0f172a;
+      --muted: #475569;
+      --accent: #1d4ed8;
+      --accent-soft: #eff6ff;
+      --warn-bg: #fffbeb;
+      --warn-border: #f59e0b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 1.5rem 1rem 3rem;
+      font-family: "Pretendard", "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+    .sheet {
+      max-width: 920px;
+      margin: 0 auto;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem 2.25rem;
+      box-shadow: 0 4px 16px rgb(15 23 42 / 0.06);
+    }
+    .sheet-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 2px solid var(--text);
+      margin-bottom: 1.5rem;
+    }
+    .sheet-eyebrow {
+      margin: 0 0 0.25rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    h1 {
+      margin: 0;
+      font-size: 1.5rem;
+      letter-spacing: -0.02em;
+    }
+    .sheet-meta {
+      margin: 0.35rem 0 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+    .header-actions {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.55rem 0.95rem;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      color: var(--text);
+      font: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #ffffff;
+    }
+    .notice-box {
+      background: var(--warn-bg);
+      border-left: 4px solid var(--warn-border);
+      padding: 0.9rem 1.1rem;
+      border-radius: 6px;
+      margin-bottom: 1.75rem;
+      font-size: 0.92rem;
+    }
+    .section-block {
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px dashed var(--border);
+    }
+    .section-block:last-of-type {
+      border-bottom: 0;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin: 0 0 0.9rem;
+      padding: 0.5rem 0.85rem;
+      background: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 4px;
+      font-size: 1.12rem;
+    }
+    .pts-pill {
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--accent);
+      background: #ffffff;
+      padding: 0.15rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid #bfdbfe;
+      white-space: nowrap;
+    }
+    h3 {
+      margin: 1.1rem 0 0.45rem;
+      font-size: 1rem;
+    }
+    ol, ul {
+      margin: 0.35rem 0 0.75rem;
+      padding-left: 1.35rem;
+    }
+    li { margin-bottom: 0.35rem; }
+    code {
+      font-family: Consolas, "Courier New", monospace;
+      background: #f1f5f9;
+      padding: 0.1rem 0.35rem;
+      border-radius: 4px;
+      font-size: 0.9em;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0.75rem 0 1rem;
+      font-size: 0.9rem;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 0.45rem 0.6rem;
+      text-align: center;
+    }
+    th {
+      background: #f1f5f9;
+      font-weight: 700;
+    }
+    td.num { text-align: right; font-variant-numeric: tabular-nums; }
+    .sub-note {
+      font-size: 0.86rem;
+      color: var(--muted);
+      margin-top: 0.25rem;
+    }
+    @media print {
+      body { background: #ffffff; padding: 0; }
+      .sheet { box-shadow: none; border: 0; padding: 0; }
+      .no-print { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <article class="sheet">
+    <header class="sheet-header">
+      <div>
+        <p class="sheet-eyebrow">컴퓨터활용능력 2급 실기 대표 기출 샘플</p>
+        <h1>대표기출따라하기 문제지</h1>
+        <p class="sheet-meta">시험시간: 40분 · 총점: 100점 (70점 이상 합격) · 실습 파일: <code>대표기출따라하기_실습파일.xlsm</code></p>
+      </div>
+      <div class="header-actions no-print">
+        <button type="button" class="btn btn-primary" onclick="window.print()">문제지 인쇄</button>
+      </div>
+    </header>
+
+    <div class="notice-box">
+      <strong>수험자 유의사항</strong>:
+      제공된 실습 엑셀 파일(<code>.xlsm</code>)을 열어 각 시트명(<code>기본작업-1</code> ~ <code>차트작업</code>)에 지시된 작업을 수행한 뒤, <strong>반드시 저장(Ctrl+S)하여 닫은 파일</strong>을 채점 화면에 업로드하세요.
+    </div>
+
+    <!-- 문제 1 -->
+    <section class="section-block">
+      <h2 class="section-title">
+        <span>문제 1. 기본작업</span>
+        <span class="pts-pill">총 20점</span>
+      </h2>
+
+      <h3>1. [기본작업-1] 데이터 입력 (5점 · 부분점수 없음)</h3>
+      <p><code>기본작업-1</code> 시트의 <code>A3:F8</code> 영역에 아래 표의 데이터를 정확히 입력하세요.</p>
+      <table>
+        <thead>
+          <tr>
+            <th>구분 (A3)</th>
+            <th>제품명 (B3)</th>
+            <th>판매수량 (C3)</th>
+            <th>단가 (D3)</th>
+            <th>매출액 (E3)</th>
+            <th>비고 (F3)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>가전</td><td>공기청정기</td><td class="num">120</td><td class="num">350000</td><td class="num">42000000</td><td>인기상품</td></tr>
+          <tr><td>가전</td><td>무선청소기</td><td class="num">85</td><td class="num">480000</td><td class="num">40800000</td><td>정상</td></tr>
+          <tr><td>생활</td><td>전기포트</td><td class="num">210</td><td class="num">65000</td><td class="num">13650000</td><td>특가</td></tr>
+          <tr><td>생활</td><td>스팀다리미</td><td class="num">140</td><td class="num">89000</td><td class="num">12460000</td><td>정상</td></tr>
+          <tr><td>주방</td><td>에어프라이어</td><td class="num">165</td><td class="num">145000</td><td class="num">23925000</td><td>인기상품</td></tr>
+        </tbody>
+      </table>
+
+      <h3>2. [기본작업-2] 셀 서식 지정 (10점 · 각 2점 부분점수 있음)</h3>
+      <p><code>기본작업-2</code> 시트(상공 정육식당 소고기 판매 현황)에 다음 지시사항을 적용하세요.</p>
+      <ol>
+        <li><code>A1:F1</code> 영역을 병합하고 가운데 맞춤한 뒤, 글꼴 크기를 <code>14pt</code> 이상·굵게(Bold)로 지정하세요.</li>
+        <li><code>A3:F3</code> 머리글 영역에 채우기 색(음영)을 지정하고, <code>A3:F15</code> 표 전체에 테두리를 적용하세요.</li>
+        <li>종류 열의 동일 품목 셀(<code>A4:A6</code>, <code>A7:A9</code>, <code>A10:A12</code>, <code>A13:A15</code>)을 각각 병합하세요.</li>
+        <li>사용자 지정 표시 형식을 적용하세요:
+          <code>D4:D15</code> 및 <code>F4:F15</code>에는 천 단위 구분 기호/통화 형식(예: <code>#,##0</code> 또는 <code>₩#,##0</code>), <code>E4:E15</code>에는 숫자 뒤에 <code>kg</code>가 표시되도록(예: <code>0"kg"</code>) 설정하세요.</li>
+        <li><code>F4:F15</code> 영역의 이름을 <code>총판매금액</code>으로 정의하세요. (또는 해당 영역에 조건부 서식 적용)</li>
+      </ol>
+
+      <h3>3. [기본작업-3] 고급 필터 / 조건부 서식 (5점 · 부분점수 없음)</h3>
+      <p><code>기본작업-3</code> 시트(상공 포장이사 예약 현황)에서 아래 작업 중 지시된 조건을 수행하세요.</p>
+      <ul>
+        <li><code>A3:H16</code> 데이터 목록에서 조건에 맞는 데이터를 고급 필터를 이용하여 <code>A22</code> 셀 위치부터 추출하거나, <code>A4:H16</code> 범위에 행 전체 조건부 서식을 적용하세요.</li>
+      </ul>
+    </section>
+
+    <!-- 문제 2 -->
+    <section class="section-block">
+      <h2 class="section-title">
+        <span>문제 2. 계산작업</span>
+        <span class="pts-pill">총 40점 (각 8점 · 부분점수 없음)</span>
+      </h2>
+      <p class="sub-note">※ 계산작업은 결과값이 정답과 일치하면 함수식의 세부 구조나 셀 참조 방식(<code>$</code> 사용 여부 등)이 달라도 정답으로 인정됩니다.</p>
+
+      <ol>
+        <li><strong>[표1] 셔틀버스 운행 시간표 (<code>D3:D10</code>)</strong>:
+          출발시간(<code>C3:C10</code>)에 정류장수(<code>B3:B10</code>) × 6분(예: <code>=C3+TIME(0,B3*6,0)</code>)을 더하여 도착시간을 계산하세요.</li>
+        <li><strong>[표2] 영업부서별 실적표 (<code>J3:J10</code>)</strong>:
+          소속(<code>F3:F10</code>), 매장위치(<code>H3:H10</code>), 판매실적(<code>I3:I10</code>)을 참조하여 <code>IF</code>, <code>AND</code>, <code>OR</code> 등의 함수로 비고를 구하세요. (예: 판매실적이 5000 이상이면 <code>"우수"</code>, 아니면 <code>"보통"</code>)</li>
+        <li><strong>[표3] 영화예매현황 (<code>D24</code>)</strong>:
+          조건 범위(<code>E22:E23</code>) 또는 조건 함수를 이용해 장르가 <code>"드라마"</code>인 영화들의 예매수량 평균(<code>21881.25</code>)을 구하세요. (<code>DAVERAGE</code>, <code>AVERAGEIF</code> 등)</li>
+        <li><strong>[표4] 아파트 당첨현황 (<code>J14:J24</code>)</strong>:
+          최저층(<code>H14:H24</code>)과 최고층(<code>I14:I24</code>) 사이의 임의의 정수로 당첨층수를 구하세요. (<code>RANDBETWEEN(H14, I14)</code> 등)</li>
+        <li><strong>[표5] 자격증 수강등록 현황 (<code>E28:E37</code>)</strong>:
+          수강코드(<code>B28:B37</code>)의 구분 문자를 추출해 <code>CHOOSE</code>, <code>MID</code>, <code>IF</code> 등의 함수로 수강과목명을 표시하세요.</li>
+      </ol>
+    </section>
+
+    <!-- 문제 3 -->
+    <section class="section-block">
+      <h2 class="section-title">
+        <span>문제 3. 분석작업</span>
+        <span class="pts-pill">총 20점 (각 10점 · 부분점수 없음)</span>
+      </h2>
+      <p class="sub-note">※ 하나라도 조건을 틀리거나 위치가 어긋나면 해당 문제 점수(10점)가 전부 감점됩니다.</p>
+
+      <ol>
+        <li><strong>[분석작업-1] 목표값 찾기 (10점)</strong>:
+          <code>분석작업-1</code> 시트(4월 스마트폰 매출 현황)에서 <strong>순이익(<code>E6</code>)이 <code>20,000,000</code></strong>이 되도록 <strong>판매수량(<code>B4</code>)</strong>을 변경하는 목표값 찾기를 실행하세요.</li>
+        <li><strong>[분석작업-2] 데이터 통합 (10점)</strong>:
+          <code>분석작업-2</code> 시트에서 <code>[표1]</code>(서울, <code>A2:D6</code>), <code>[표2]</code>(경기, <code>F2:I6</code>), <code>[표3]</code>(인천, <code>A9:D13</code>)의 1~3월 영업실적을 <code>[표4]</code> 수도권 영업실적(<code>F9:I13</code>) 영역에 <strong>합계</strong>로 통합하세요.</li>
+      </ol>
+    </section>
+
+    <!-- 문제 4 -->
+    <section class="section-block">
+      <h2 class="section-title">
+        <span>문제 4. 기타작업 (매크로 · 차트)</span>
+        <span class="pts-pill">총 20점 (부분점수 있음)</span>
+      </h2>
+
+      <h3>1. [매크로작업] (10점 · 각 5점, 기록 3점 + 연결 2점)</h3>
+      <ol>
+        <li><code>매크로작업</code> 시트의 <code>G4:G13</code> 영역에 각 학생의 총점(국어~과학탐구 합계)을 계산하는 매크로를 기록하고, 시트 내 양식 단추/도형에 연결하세요.</li>
+        <li><code>A3:G3</code> 머리글 영역에 서식(채우기 색 또는 글꼴 등)을 지정하는 매크로를 기록하고, 시트 내 도형/단추에 연결하세요.</li>
+      </ol>
+
+      <h3>2. [차트작업] (10점 · 5문항 각 2점)</h3>
+      <p><code>차트작업</code> 시트(1분기 보드게임 매출 현황)에 삽입된 차트에 아래 5가지 작업을 수행하세요.</p>
+      <ol>
+        <li>차트 제목을 추가하고 적절한 제목 텍스트를 입력하세요.</li>
+        <li>차트 종류를 <strong>가로 막대형(<code>barChart</code>)</strong> 또는 지정된 막대형 계열로 변경하세요.</li>
+        <li>범례 위치를 <strong>위쪽(<code>t</code>)</strong> 또는 <strong>아래쪽(<code>b</code>)</strong>으로 변경하세요.</li>
+        <li>세로(값) 축의 눈금(최솟값/최댓값/주 단위)을 설정하세요.</li>
+        <li>차트 계열에 <strong>데이터 레이블 값</strong>이 표시되도록 설정하세요.</li>
+      </ol>
+    </section>
+  </article>
+</body>
+</html>

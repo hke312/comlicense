@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>내 점수 이력 | 컴퓨터활용능력 2급 실기 채점 프로그램</title>
+  <link rel="stylesheet" href="/static/css/common.css">
+  <link rel="stylesheet" href="/static/css/history-page.css">
+  <script type="module" src="/static/js/nav.js"></script>
+  <script type="module" src="/static/js/auth.js"></script>
+  <script type="module" src="/static/js/history-page.js"></script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link visually-hidden">본문 바로가기</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo">
+        <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="18" height="18" rx="3"></rect>
+          <path d="M9 12l2 2 4-4"></path>
+        </svg>
+        <span>컴활 2급 실기 채점</span>
+      </a>
+
+      <div class="header-right">
+        <div id="auth-header-controls" class="auth-header-controls"></div>
+
+        <nav class="site-nav" aria-label="주 메뉴">
+          <button type="button" class="menu-button" popovertarget="site-menu" popovertargetaction="toggle" aria-controls="site-menu" aria-label="메뉴 열기">
+            <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+            <span>메뉴</span>
+          </button>
+
+          <ul id="site-menu" class="site-menu" popover="auto">
+            <li><a href="/">채점프로그램 Home</a></li>
+            <li><a href="/history" aria-current="page">내 점수 이력</a></li>
+            <li><a href="/statistics">점수별 통계보기</a></li>
+            <li><a href="/criteria">채점기준 및 도움말</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content" class="page-main">
+    <section class="card history-toolbar" aria-labelledby="history-page-title">
+      <div class="toolbar-top">
+        <div class="toolbar-heading">
+          <h1 id="history-page-title" class="page-title">내 점수 이력 및 감점 분석</h1>
+          <p id="history-subtitle" class="page-subtitle">로그인한 학생 계정으로 제출한 회차별 점수 추이와 감점 내역을 확인할 수 있습니다.</p>
+        </div>
+
+        <div class="toolbar-actions">
+          <search>
+            <form id="history-filter-form" class="history-filter-form">
+              <div class="filter-field">
+                <label for="history-exam-select" class="filter-label">회차 필터</label>
+                <select id="history-exam-select" name="exam_id" class="filter-select">
+                  <option value="">전체 회차</option>
+                </select>
+              </div>
+              <button type="submit" id="history-query-btn" class="btn btn-primary">조회</button>
+            </form>
+          </search>
+          <a href="/" class="btn btn-secondary">새 답안 채점하기</a>
+        </div>
+      </div>
+
+      <div id="history-kpi-strip" class="history-kpi-grid" aria-live="polite">
+        <div class="kpi-card">
+          <span class="kpi-label">총 응시 횟수</span>
+          <strong id="kpi-attempts" class="kpi-value">-</strong>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-label">합격 횟수 / 합격률</span>
+          <strong id="kpi-pass-rate" class="kpi-value">-</strong>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-label">최고 점수</span>
+          <strong id="kpi-best-score" class="kpi-value">-</strong>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-label">평균 점수</span>
+          <strong id="kpi-avg-score" class="kpi-value">-</strong>
+        </div>
+      </div>
+    </section>
+
+    <section id="history-guest-gate" class="card guest-gate" aria-labelledby="guest-gate-title">
+      <h2 id="guest-gate-title" class="guest-gate-title">로그인이 필요합니다</h2>
+      <p class="guest-gate-desc">
+        이메일이나 전화번호 없이 학습용 아이디와 닉네임만으로 가입할 수 있으며, 로그인 후 채점하면 모든 점수와 감점 내역이 자동 기록됩니다.
+      </p>
+      <div class="guest-gate-actions">
+        <button type="button" id="guest-login-btn" class="btn btn-primary">로그인</button>
+        <button type="button" id="guest-signup-btn" class="btn btn-secondary">회원가입</button>
+      </div>
+    </section>
+
+    <section id="history-records-section" class="card history-records-card" aria-labelledby="history-table-caption" hidden>
+      <div class="card-header">
+        <h2 id="history-records-heading" class="card-title">회차별 채점 기록</h2>
+        <span id="history-count-badge" class="soft-badge">0건</span>
+      </div>
+
+      <div id="history-status" class="history-status" role="status" aria-live="polite" hidden></div>
+
+      <div tabindex="0" role="region" aria-labelledby="history-table-caption" class="table-wrapper">
+        <table class="history-table">
+          <caption id="history-table-caption" class="visually-hidden">학생 본인 회차별 채점 점수 및 감점 상세 내역 목록</caption>
+          <thead>
+            <tr>
+              <th scope="col">채점일시</th>
+              <th scope="col">회차</th>
+              <th scope="col">총점 / 판정</th>
+              <th scope="col">기본(20)</th>
+              <th scope="col">계산(40)</th>
+              <th scope="col">분석(20)</th>
+              <th scope="col">기타(20)</th>
+              <th scope="col">상세</th>
+            </tr>
+          </thead>
+          <tbody id="history-tbody">
+            <tr class="empty-row">
+              <td colspan="8">채점 기록을 불러오는 중입니다...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 컴퓨터활용능력 2급 실기 채점 프로그램</p>
+  </footer>
+
+  <!-- 과거 채점 감점 상세 모달 -->
+  <dialog id="deduction-detail-dialog" class="deduction-dialog" closedby="any" aria-labelledby="deduction-dialog-title">
+    <div class="dialog-panel">
+      <div class="dialog-header">
+        <h2 id="deduction-dialog-title" class="dialog-title">감점 상세 내역</h2>
+        <button type="button" id="deduction-dialog-close-x" class="dialog-close" aria-label="감점 상세 창 닫기">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div id="deduction-dialog-body" class="dialog-body"></div>
+      <form method="dialog" class="dialog-footer">
+        <button type="submit" value="close" class="btn btn-dark" autofocus>닫기</button>
+      </form>
+    </div>
+  </dialog>
+</body>
+</html>

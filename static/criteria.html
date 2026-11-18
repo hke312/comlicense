@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>채점기준 및 도움말 | 컴퓨터활용능력 2급 실기 채점 프로그램</title>
+  <link rel="stylesheet" href="/static/css/common.css">
+  <link rel="stylesheet" href="/static/css/criteria-page.css">
+  <script type="module" src="/static/js/nav.js"></script>
+  <script type="module" src="/static/js/auth.js"></script>
+  <script type="module" src="/static/js/criteria-page.js"></script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link visually-hidden">본문 바로가기</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo">
+        <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="18" height="18" rx="2" />
+          <path d="M3 9h18M9 21V9" />
+        </svg>
+        <span>컴활 2급 실기 채점</span>
+      </a>
+
+      <div class="header-right">
+        <div id="auth-header-controls" class="auth-header-controls"></div>
+
+        <nav class="site-nav" aria-label="주 메뉴">
+          <button type="button" class="menu-button" popovertarget="site-menu" popovertargetaction="toggle" aria-controls="site-menu" aria-label="메뉴 열기">
+            <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+            <span>메뉴</span>
+          </button>
+          <ul id="site-menu" class="site-menu" popover="auto">
+            <li><a href="/">채점프로그램 Home</a></li>
+            <li><a href="/history">내 점수 이력</a></li>
+            <li><a href="/statistics">점수별 통계보기</a></li>
+            <li><a href="/criteria" aria-current="page">채점기준 및 도움말</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content" class="page-main">
+    <!-- Hero / Overview Card -->
+    <section class="card hero-card" aria-labelledby="page-title">
+      <div class="hero-top">
+        <div class="hero-text">
+          <p class="hero-eyebrow">대한상공회의소 실기 시험 기준 안내</p>
+          <h1 id="page-title" class="hero-title">컴퓨터활용능력 2급 실기 채점기준 및 도움말</h1>
+          <p class="hero-lead">
+            컴퓨터활용능력 2급 실기는
+            <strong class="pass-highlight">100점 만점에 70점 이상이면 합격</strong>입니다.
+            영역별 배점과 부분점수 적용 기준을 확인하고 아래 시뮬레이터로 합격 여부를 미리 점검해 보세요.
+          </p>
+        </div>
+
+        <div class="pass-badge-box" aria-label="합격 기준 요약">
+          <span class="pass-badge-label">합격 기준 점수</span>
+          <strong class="pass-badge-score">70<span class="pass-badge-unit">점 이상</span></strong>
+          <span class="pass-badge-sub">총점 100점 만점</span>
+        </div>
+      </div>
+
+      <!-- 100-Point Stacked Score Bar -->
+      <div class="score-distribution">
+        <div class="distribution-header">
+          <h2 class="distribution-title">영역별 100점 배점 구성</h2>
+          <span class="distribution-note">합격 기준선: 70점</span>
+        </div>
+
+        <div class="stacked-bar-wrap">
+          <div class="stacked-bar" role="img" aria-label="총 100점 구성: 기본작업 20점(20%), 계산작업 40점(40%), 분석작업 20점(20%), 기타작업 20점(20%)">
+            <div class="bar-segment seg-basic" style="--seg-weight: 20">
+              <span class="seg-name">기본작업</span>
+              <span class="seg-pts">20점</span>
+            </div>
+            <div class="bar-segment seg-calc" style="--seg-weight: 40">
+              <span class="seg-name">계산작업</span>
+              <span class="seg-pts">40점</span>
+            </div>
+            <div class="bar-segment seg-analysis" style="--seg-weight: 20">
+              <span class="seg-name">분석작업</span>
+              <span class="seg-pts">20점</span>
+            </div>
+            <div class="bar-segment seg-etc" style="--seg-weight: 20">
+              <span class="seg-name">기타작업</span>
+              <span class="seg-pts">20점</span>
+            </div>
+          </div>
+          <div class="pass-threshold-marker" aria-hidden="true">
+            <span class="threshold-line"></span>
+            <span class="threshold-tag">합격선 70점</span>
+          </div>
+        </div>
+
+        <ul class="distribution-legend">
+          <li><span class="legend-dot dot-basic" aria-hidden="true"></span>기본작업 20점 (20%)</li>
+          <li><span class="legend-dot dot-calc" aria-hidden="true"></span>계산작업 40점 (40%)</li>
+          <li><span class="legend-dot dot-analysis" aria-hidden="true"></span>분석작업 20점 (20%)</li>
+          <li><span class="legend-dot dot-etc" aria-hidden="true"></span>기타작업 20점 (20%)</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Domain Criteria Section (4 Cards) -->
+    <section class="criteria-section" aria-labelledby="criteria-heading">
+      <div class="section-heading-row">
+        <h2 id="criteria-heading" class="section-heading">영역별 배점 및 부분점수 기준</h2>
+        <p class="section-desc">4개 작업 영역별 문항 수, 배점, 부분점수 인정 및 감점 원칙을 상세히 안내합니다.</p>
+      </div>
+
+      <div class="criteria-grid">
+        <!-- 1. 기본작업 -->
+        <article class="card domain-card domain-basic" aria-labelledby="domain-basic-title">
+          <div class="card-header">
+            <div class="domain-title-group">
+              <span class="domain-index" aria-hidden="true">01</span>
+              <h3 id="domain-basic-title" class="card-title">기본작업</h3>
+            </div>
+            <span class="domain-total-badge badge-basic">총 20점</span>
+          </div>
+
+          <ul class="rule-list">
+            <li class="rule-item">
+              <div class="rule-head">
+                <strong class="rule-name">기본작업-1 (데이터 입력)</strong>
+                <div class="rule-badges">
+                  <span class="pts-chip">5점</span>
+                  <span class="partial-chip partial-no">부분점수 없음</span>
+                </div>
+              </div>
+              <p class="rule-detail">셀 데이터, 한자, 특수문자, 기호 등을 정확히 입력해야 하며 <strong>하나라도 틀리면 0점</strong> 처리됩니다.</p>
+            </li>
+
+            <li class="rule-item">
+              <div class="rule-head">
+                <strong class="rule-name">기본작업-2 (셀 서식 / 조건부 서식 등)</strong>
+                <div class="rule-badges">
+                  <span class="pts-chip">10점</span>
+                  <span class="partial-chip partial-yes">부분점수 있음</span>
+                </div>
+              </div>
+              <p class="rule-detail">총 5문제 출제되며, <strong>각 2점씩 부분점수</strong>가 인정됩니다.</p>
+            </li>
+
+            <li class="rule-item">
+              <div class="rule-head">
+                <strong class="rule-name">기본작업-3 (고급필터, 조건부서식 등)</strong>
+                <div class="rule-badges">
+                  <span class="pts-chip">5점</span>
+                  <span class="partial-chip partial-no">부분점수 없음</span>
+                </div>
+              </div>
+              <p class="rule-detail">조건 범위, 복사 위치, 수식 조건이 모두 정확해야 하며 <strong>부분점수 없이</strong> 일괄 채점됩니다.</p>
+            </li>
+          </ul>
+        </article>
+
+        <!-- 2. 계산작업 -->
+        <article class="card domain-card domain-calc" aria-labelledby="domain-calc-title">
+          <div class="card-header">
+            <div class="domain-title-group">
+              <span class="domain-index" aria-hidden="true">02</span>
+              <h3 id="domain-calc-title" class="card-title">계산작업</h3>
+            </div>
+            <span class="domain-total-badge badge-calc">총 40점</span>
+          </div>
+
+          <ul class="rule-list">
+            <li class="rule-item">
+              <div class="rule-head">
+                <strong class="rule-name">함수 문제</strong>
+                <div class="rule-badges">
+                  <span class="pts-chip">총 5문제 · 각 8점</span>
+                  <span class="partial-chip partial-no">부분점수 없음</span>
+                </div>
+              </div>
+              <p class="rule-detail">총 5문제가 출제되며 문항당 8점 배점입니다. 각 문항 내에서는 <strong>부분점수가 없습니다</strong>.</p>
+            </li>
+          </ul>
+
+          <div class="callout-box callout-info" role="note">
+            <strong class="callout-title">핵심 인정 기준</strong>
+            <p class="callout-text">
+              결과값이 정답과 일치하면 함수식의 세부 구조나 셀 참조 방식(<code>$</code> 절대/상대 참조 여부 등)이 달라도 정답으로 인정됩니다.
+            </p>
+          </div>
+        </article>
+
+        <!-- 3. 분석작업 -->
+        <article class="card domain-card domain-analysis" aria-labelledby="domain-analysis-title">
+          <div class="card-header">
+            <div class="domain-title-group">
+              <span class="domain-index" aria-hidden="true">03</span>
+              <h3 id="domain-analysis-title" class="card-title">분석작업</h3>
+            </div>
+            <span class="domain-total-badge badge-analysis">총 20점</span>
+          </div>
+
+          <ul class="rule-list">
+            <li class="rule-item">
+              <div class="rule-head">
+                <strong class="rule-name">피벗테이블, 시나리오, 목표값 찾기 등</strong>
+                <div class="rule-badges">
+                  <span class="pts-chip">총 2문제 · 각 10점</span>
+                  <span class="partial-chip partial-no">부분점수 없음</span>
+                </div>
+              </div>
+              <p class="rule-detail">부분합, 피벗테이블, 데이터 통합, 시나리오, 목표값 찾기 등에서 총 2문제가 출제되며 각 10점 배점입니다.</p>
+            </li>
+          </ul>
+
+          <div class="callout-box callout-warning" role="note">
+            <strong class="callout-title">핵심 감점 기준</strong>
+            <p class="callout-text">
+              <strong>부분점수가 없으며</strong>, 하나라도 조건을 틀리거나 지정된 위치가 어긋나면 해당 문제 점수(10점)가 전부 감점됩니다.
+            </p>
+          </div>
+        </article>
+
+        <!-- 4. 기타작업 -->
+        <article class="card domain-card domain-etc" aria-labelledby="domain-etc-title">
+          <div class="card-header">
+            <div class="domain-title-group">
+              <span class="domain-index" aria-hidden="true">04</span>
+              <h3 id="domain-etc-title" class="card-title">기타작업</h3>
+            </div>
+            <span class="domain-total-badge badge-etc">총 20점</span>
+          </div>
+
+          <ul class="rule-list">
+            <li class="rule-item">
+              <div class="rule-head">
+                <strong class="rule-name">매크로 작업</strong>
+                <div class="rule-badges">
+                  <span class="pts-chip">총 2문제 · 각 5점</span>
+                  <span class="partial-chip partial-yes">부분점수 있음</span>
+                </div>
+              </div>
+              <p class="rule-detail">총 2문제(각 5점)가 출제되며, 매크로 기록 내용과 버튼·도형 생성 및 연결 여부에 따라 <strong>부분점수 있음</strong>으로 채점됩니다.</p>
+            </li>
+
+            <li class="rule-item">
+              <div class="rule-head">
+                <strong class="rule-name">차트 작업</strong>
+                <div class="rule-badges">
+                  <span class="pts-chip">총 5문항 · 각 2점</span>
+                  <span class="partial-chip partial-yes">부분점수 있음</span>
+                </div>
+              </div>
+              <p class="rule-detail">총 5문항(각 2점)이 출제되며, 차트 제목·범례·축 서식 등 <strong>세부 지시사항별로 부분점수 있음</strong>이 적용됩니다.</p>
+            </li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- Interactive Pass Score Simulator -->
+    <section class="card simulator-card" aria-labelledby="simulator-heading">
+      <div class="card-header simulator-header">
+        <div>
+          <h2 id="simulator-heading" class="card-title">합격 점수 시뮬레이터</h2>
+          <p class="simulator-subtitle">항목별 예상 득점을 조절해 합격(70점 이상) 가능 여부를 미리 확인해 보세요.</p>
+        </div>
+        <div class="preset-actions" role="group" aria-label="시뮬레이터 빠른 설정">
+          <button type="button" class="btn btn-secondary btn-sm" id="preset-pass">합격선 예시 (70점)</button>
+          <button type="button" class="btn btn-secondary btn-sm" id="preset-perfect">만점 (100점)</button>
+          <button type="button" class="btn btn-secondary btn-sm" id="preset-reset">초기화 (0점)</button>
+        </div>
+      </div>
+
+      <div class="simulator-layout">
+        <form class="simulator-controls" id="simulator-form" aria-labelledby="simulator-heading">
+          <!-- 기본작업-1 -->
+          <div class="sim-row">
+            <div class="sim-info">
+              <span id="sim-basic1-title" class="sim-label">기본작업-1 (데이터 입력)</span>
+              <span class="sim-meta">5점 만점 · 부분점수 없음</span>
+            </div>
+            <div class="sim-control-area">
+              <label for="sim-basic1" class="sim-checkbox-label">
+                <input type="checkbox" id="sim-basic1" class="sim-checkbox" data-sim-key="basic1" aria-labelledby="sim-basic1-title sim-basic1-opt" checked>
+                <span id="sim-basic1-opt">정답 (+5점)</span>
+              </label>
+              <span class="sim-score-pill" id="val-basic1">5 / 5점</span>
+            </div>
+          </div>
+
+          <!-- 기본작업-2 -->
+          <div class="sim-row">
+            <div class="sim-info">
+              <label for="sim-basic2" class="sim-label">기본작업-2 (셀 서식 등)</label>
+              <span class="sim-meta">총 5문제 × 2점 (최대 10점) · 부분점수 있음</span>
+            </div>
+            <div class="sim-control-area sim-range-wrap">
+              <button type="button" class="step-btn" data-step-target="sim-basic2" data-step-delta="-1" aria-label="기본작업-2 정답 개수 1 감소">−</button>
+              <input type="range" id="sim-basic2" class="sim-range" data-sim-key="basic2" min="0" max="5" step="1" value="4">
+              <button type="button" class="step-btn" data-step-target="sim-basic2" data-step-delta="1" aria-label="기본작업-2 정답 개수 1 증가">+</button>
+              <span class="sim-score-pill" id="val-basic2">4문제 · 8 / 10점</span>
+            </div>
+          </div>
+
+          <!-- 기본작업-3 -->
+          <div class="sim-row">
+            <div class="sim-info">
+              <span id="sim-basic3-title" class="sim-label">기본작업-3 (고급필터 등)</span>
+              <span class="sim-meta">5점 만점 · 부분점수 없음</span>
+            </div>
+            <div class="sim-control-area">
+              <label for="sim-basic3" class="sim-checkbox-label">
+                <input type="checkbox" id="sim-basic3" class="sim-checkbox" data-sim-key="basic3" aria-labelledby="sim-basic3-title sim-basic3-opt" checked>
+                <span id="sim-basic3-opt">정답 (+5점)</span>
+              </label>
+              <span class="sim-score-pill" id="val-basic3">5 / 5점</span>
+            </div>
+          </div>
+
+          <!-- 계산작업 -->
+          <div class="sim-row">
+            <div class="sim-info">
+              <label for="sim-calc" class="sim-label">계산작업 (함수 문제)</label>
+              <span class="sim-meta">총 5문제 × 8점 (최대 40점) · 부분점수 없음</span>
+            </div>
+            <div class="sim-control-area sim-range-wrap">
+              <button type="button" class="step-btn" data-step-target="sim-calc" data-step-delta="-1" aria-label="계산작업 정답 개수 1 감소">−</button>
+              <input type="range" id="sim-calc" class="sim-range" data-sim-key="calc" min="0" max="5" step="1" value="3">
+              <button type="button" class="step-btn" data-step-target="sim-calc" data-step-delta="1" aria-label="계산작업 정답 개수 1 증가">+</button>
+              <span class="sim-score-pill" id="val-calc">3문제 · 24 / 40점</span>
+            </div>
+          </div>
+
+          <!-- 분석작업 -->
+          <div class="sim-row">
+            <div class="sim-info">
+              <label for="sim-analysis" class="sim-label">분석작업 (피벗테이블, 시나리오 등)</label>
+              <span class="sim-meta">총 2문제 × 10점 (최대 20점) · 부분점수 없음</span>
+            </div>
+            <div class="sim-control-area sim-range-wrap">
+              <button type="button" class="step-btn" data-step-target="sim-analysis" data-step-delta="-1" aria-label="분석작업 정답 개수 1 감소">−</button>
+              <input type="range" id="sim-analysis" class="sim-range" data-sim-key="analysis" min="0" max="2" step="1" value="2">
+              <button type="button" class="step-btn" data-step-target="sim-analysis" data-step-delta="1" aria-label="분석작업 정답 개수 1 증가">+</button>
+              <span class="sim-score-pill" id="val-analysis">2문제 · 20 / 20점</span>
+            </div>
+          </div>
+
+          <!-- 기타작업-매크로 -->
+          <div class="sim-row">
+            <div class="sim-info">
+              <label for="sim-macro" class="sim-label">기타작업 — 매크로 작업</label>
+              <span class="sim-meta">총 2문제 × 5점 (최대 10점) · 부분점수 포함 (0~10점)</span>
+            </div>
+            <div class="sim-control-area sim-range-wrap">
+              <button type="button" class="step-btn" data-step-target="sim-macro" data-step-delta="-1" aria-label="매크로 점수 1점 감소">−</button>
+              <input type="range" id="sim-macro" class="sim-range" data-sim-key="macro" min="0" max="10" step="1" value="5">
+              <button type="button" class="step-btn" data-step-target="sim-macro" data-step-delta="1" aria-label="매크로 점수 1점 증가">+</button>
+              <span class="sim-score-pill" id="val-macro">5 / 10점</span>
+            </div>
+          </div>
+
+          <!-- 기타작업-차트 -->
+          <div class="sim-row">
+            <div class="sim-info">
+              <label for="sim-chart" class="sim-label">기타작업 — 차트 작업</label>
+              <span class="sim-meta">총 5문항 × 2점 (최대 10점) · 부분점수 있음</span>
+            </div>
+            <div class="sim-control-area sim-range-wrap">
+              <button type="button" class="step-btn" data-step-target="sim-chart" data-step-delta="-1" aria-label="차트 정답 문항 수 1 감소">−</button>
+              <input type="range" id="sim-chart" class="sim-range" data-sim-key="chart" min="0" max="5" step="1" value="3">
+              <button type="button" class="step-btn" data-step-target="sim-chart" data-step-delta="1" aria-label="차트 정답 문항 수 1 증가">+</button>
+              <span class="sim-score-pill" id="val-chart">3문항 · 6 / 10점</span>
+            </div>
+          </div>
+        </form>
+
+        <!-- Live Result Panel -->
+        <aside class="sim-result-panel" aria-label="시뮬레이션 예상 결과">
+          <div class="sim-status-card" id="sim-status-card" data-status="pass">
+            <span class="sim-result-eyebrow">예상 총점</span>
+            <div class="sim-total-line">
+              <strong class="sim-total-score" id="sim-total-score">73</strong>
+              <span class="sim-total-max">/ 100점</span>
+            </div>
+
+            <div class="sim-verdict-row">
+              <span class="sim-verdict-badge" id="sim-verdict-badge">
+                <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 6L9 17l-5-5" />
+                </svg>
+                <span id="sim-verdict-text">합격</span>
+              </span>
+              <span class="sim-gap-text" id="sim-gap-text">합격 기준(70점)보다 3점 여유</span>
+            </div>
+
+            <div class="sim-meter-wrap" aria-hidden="true">
+              <div class="sim-meter-track">
+                <div class="sim-meter-fill" id="sim-meter-fill" style="inline-size: 73%;"></div>
+                <div class="sim-meter-cutoff" title="합격선 70점"></div>
+              </div>
+              <div class="sim-meter-scale">
+                <span>0점</span>
+                <span class="cutoff-label">70점 합격선</span>
+                <span>100점</span>
+              </div>
+            </div>
+
+            <dl class="sim-breakdown">
+              <div class="breakdown-item">
+                <dt>기본작업</dt>
+                <dd id="sum-basic">18 / 20점</dd>
+              </div>
+              <div class="breakdown-item">
+                <dt>계산작업</dt>
+                <dd id="sum-calc">24 / 40점</dd>
+              </div>
+              <div class="breakdown-item">
+                <dt>분석작업</dt>
+                <dd id="sum-analysis">20 / 20점</dd>
+              </div>
+              <div class="breakdown-item">
+                <dt>기타작업</dt>
+                <dd id="sum-etc">11 / 20점</dd>
+              </div>
+            </dl>
+          </div>
+
+          <!-- Screen reader live announcement region -->
+          <p id="sim-live-region" class="visually-hidden" aria-live="polite" aria-atomic="true"></p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- File Submission & Help Card -->
+    <section class="card help-card" aria-labelledby="help-heading">
+      <div class="card-header">
+        <h2 id="help-heading" class="card-title">파일 제출 및 이용 안내 (도움말)</h2>
+      </div>
+
+      <div class="help-guides-grid">
+        <div class="help-box">
+          <h3 class="help-box-title">지원 파일 형식</h3>
+          <ul class="help-list">
+            <li><strong>지원 확장자:</strong> <code>.xlsx</code> (Excel 통합 문서), <code>.xlsm</code> (Excel 매크로 사용 통합 문서)</li>
+            <li>구형 <code>.xls</code> 파일이나 한셀/CSV 파일은 채점이 불가하므로 Excel에서 <code>.xlsx</code> 또는 <code>.xlsm</code>으로 저장한 뒤 업로드해 주세요.</li>
+            <li>매크로 작업(기타작업-1)까지 채점하려면 매크로가 유지되는 <code>.xlsm</code> 형식으로 저장해야 합니다.</li>
+          </ul>
+        </div>
+
+        <div class="help-box">
+          <h3 class="help-box-title">Excel 저장 시 필수 주의사항</h3>
+          <ul class="help-list">
+            <li><strong>수식 계산 결과 캐싱 필수:</strong> 채점 프로그램은 수식 구문과 함께 Excel이 마지막으로 계산해 저장한 결과값을 확인합니다. 작업 완료 후 반드시 <strong>Excel에서 저장(<code>Ctrl + S</code>)</strong>한 파일을 업로드해 주세요.</li>
+            <li>외부 프로그램이나 클라우드 뷰어에서 생성 직후 저장하지 않은 파일은 수식 결과값이 비어 0점 처리될 수 있습니다.</li>
+            <li>시트 이름(<code>기본작업-1</code>, <code>계산작업</code> 등) 변경·삭제 및 통합 문서 암호 설정 시 정상 채점이 어렵습니다.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Accessible FAQ Accordion -->
+      <div class="faq-section">
+        <div class="faq-header-row">
+          <h3 id="faq-heading" class="faq-heading">자주 묻는 질문 (FAQ)</h3>
+          <button type="button" class="btn btn-secondary btn-sm" id="faq-toggle-all" aria-expanded="false">
+            모두 펼치기
+          </button>
+        </div>
+
+        <div class="faq-list" id="faq-accordion">
+          <div class="faq-item">
+            <h4 class="faq-question-heading">
+              <button type="button" class="faq-trigger" aria-expanded="false" aria-controls="faq-panel-1" id="faq-btn-1">
+                <span class="faq-icon" aria-hidden="true"></span>
+                <span>계산작업에서 $ 절대참조 방식이나 사용한 함수가 예시 답안과 다르면 오답인가요?</span>
+              </button>
+            </h4>
+            <div id="faq-panel-1" class="faq-panel" role="region" aria-labelledby="faq-btn-1" hidden="until-found">
+              <div class="faq-panel-inner">
+                <p>아니요. 계산작업(총 40점, 5문제 × 8점)은 <strong>결과값이 정답과 일치하면 함수식의 세부 구조나 셀 참조 방식(<code>$</code> 절대/상대 참조 사용 여부 등)이 달라도 정답으로 인정</strong>됩니다. 다만 시험 지문에서 특정 함수 사용을 명시한 경우에는 제시된 함수를 사용하는 것이 안전합니다.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <h4 class="faq-question-heading">
+              <button type="button" class="faq-trigger" aria-expanded="false" aria-controls="faq-panel-2" id="faq-btn-2">
+                <span class="faq-icon" aria-hidden="true"></span>
+                <span>수식을 맞게 입력했는데 채점 결과에서 계산작업이 0점으로 나옵니다.</span>
+              </button>
+            </h4>
+            <div id="faq-panel-2" class="faq-panel" role="region" aria-labelledby="faq-btn-2" hidden="until-found">
+              <div class="faq-panel-inner">
+                <p>자동 채점 엔진(openpyxl)은 Excel 파일 내부에 저장된 <strong>수식 계산 결과 캐시</strong>를 읽습니다. 파일을 수정한 뒤 Excel에서 직접 열어 저장(<code>Ctrl + S</code>)하지 않았거나, 자동 계산 옵션이 '수동'으로 되어 있으면 결과값이 비어 있을 수 있습니다. Excel에서 <code>F9</code>로 재계산 후 저장하여 다시 업로드해 보세요.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <h4 class="faq-question-heading">
+              <button type="button" class="faq-trigger" aria-expanded="false" aria-controls="faq-panel-3" id="faq-btn-3">
+                <span class="faq-icon" aria-hidden="true"></span>
+                <span>매크로가 포함된 .xlsm 파일도 정상적으로 채점되나요?</span>
+              </button>
+            </h4>
+            <div id="faq-panel-3" class="faq-panel" role="region" aria-labelledby="faq-btn-3" hidden="until-found">
+              <div class="faq-panel-inner">
+                <p>네, <code>.xlsx</code>와 <code>.xlsm</code> 형식을 모두 지원합니다. 기타작업의 매크로 작업(총 2문제, 각 5점)은 매크로 기록 여부와 버튼/도형 생성 및 매크로 연결 상태에 따라 부분점수가 반영됩니다.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <h4 class="faq-question-heading">
+              <button type="button" class="faq-trigger" aria-expanded="false" aria-controls="faq-panel-4" id="faq-btn-4">
+                <span class="faq-icon" aria-hidden="true"></span>
+                <span>분석작업과 기본작업-3은 왜 부분점수가 없나요?</span>
+              </button>
+            </h4>
+            <div id="faq-panel-4" class="faq-panel" role="region" aria-labelledby="faq-btn-4" hidden="until-found">
+              <div class="faq-panel-inner">
+                <p>대한상공회의소 실제 채점 기준에 따라 <strong>기본작업-1(5점), 기본작업-3(5점), 계산작업(문항당 8점), 분석작업(문항당 10점)</strong>은 부분점수 없이 채점됩니다. 특히 분석작업은 피벗테이블·시나리오·목표값 찾기 등에서 조건 하나가 틀리거나 출력 위치가 어긋나면 해당 문제 점수(10점) 전체가 감점되므로 지시사항의 셀 위치를 꼼꼼히 확인해야 합니다.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <h4 class="faq-question-heading">
+              <button type="button" class="faq-trigger" aria-expanded="false" aria-controls="faq-panel-5" id="faq-btn-5">
+                <span class="faq-icon" aria-hidden="true"></span>
+                <span>부분점수가 적용되는 항목은 어떤 것들이 있나요?</span>
+              </button>
+            </h4>
+            <div id="faq-panel-5" class="faq-panel" role="region" aria-labelledby="faq-btn-5" hidden="until-found">
+              <div class="faq-panel-inner">
+                <p><strong>기본작업-2</strong>(총 5문제, 각 2점), <strong>기타작업 매크로</strong>(총 2문제 각 5점 — 매크로 기록 및 버튼/도형 생성 연결에 부분점수), <strong>기타작업 차트</strong>(총 5문항, 각 2점 — 세부 지시사항별 부분점수)에 부분점수가 적용됩니다.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="help-cta-row">
+        <a href="/" class="btn btn-primary">실습 파일 채점하러 가기</a>
+        <a href="/statistics" class="btn btn-secondary">점수별 통계 보기</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>컴퓨터활용능력 2급 실기 자동 채점 프로그램 · 합격 기준: 100점 만점에 70점 이상</p>
+  </footer>
+</body>
+</html>

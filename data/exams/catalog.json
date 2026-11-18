@@ -1,0 +1,32 @@
+{
+  "exams": [
+    {
+      "exam_id": "sample_01",
+      "title": "대표기출따라하기",
+      "description": "컴퓨터활용능력 2급 실기 대표 기출 샘플 (기본작업·계산작업·분석작업·기타작업)",
+      "question_file": "sample_01/question.xlsm",
+      "answer_spec_file": "sample_01/answer_spec.json",
+      "problem_sheet_file": "sample_01/problem_sheet.html",
+      "fallback_exam_id": null,
+      "is_sample": true
+    },
+    {
+      "exam_id": "2026_01",
+      "title": "2026년 1회 기출모의",
+      "description": "2026년 제1회 컴퓨터활용능력 2급 실기 모의고사",
+      "question_file": "2026_01/question.xlsm",
+      "answer_spec_file": "2026_01/answer_spec.json",
+      "fallback_exam_id": "sample_01",
+      "is_sample": false
+    },
+    {
+      "exam_id": "2026_02",
+      "title": "2026년 2회 기출모의",
+      "description": "2026년 제2회 컴퓨터활용능력 2급 실기 모의고사",
+      "question_file": "2026_02/question.xlsm",
+      "answer_spec_file": "2026_02/answer_spec.json",
+      "fallback_exam_id": "sample_01",
+      "is_sample": false
+    }
+  ]
+}
