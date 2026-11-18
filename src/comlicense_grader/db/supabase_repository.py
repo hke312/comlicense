@@ -37,9 +37,10 @@ class SupabaseRepository:
         self.rest_url = f"{self.supabase_url}/rest/v1" if self.supabase_url else "/rest/v1"
         self.headers = {
             "apikey": self.service_role_key,
-            "Authorization": f"Bearer {self.service_role_key}",
             "Content-Type": "application/json",
         }
+        if self.service_role_key and not self.service_role_key.startswith("sb_secret_"):
+            self.headers["Authorization"] = f"Bearer {self.service_role_key}"
         self._client = httpx.Client(
             base_url=self.rest_url,
             headers=self.headers,

@@ -2,8 +2,11 @@
 
 from __future__ import annotations
 
+import base64
+import json
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
+from urllib.parse import urlparse
 
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
@@ -66,10 +69,43 @@ async def page_criteria() -> FileResponse:
 
 @app.get("/health", tags=["system"])
 async def health_check() -> dict[str, object]:
-    """Simple health check endpoint."""
+    """Simple health check endpoint with non-secret configuration diagnostics."""
+    url = get_supabase_url()
+    key = get_supabase_service_role_key()
+    host = urlparse(url).hostname or ""
+    url_ref = host.split(".")[0] if host else ""
+
+    key_kind = "empty"
+    jwt_role: str | None = None
+    jwt_ref_matches_url: bool | None = None
+    if key:
+        if key.startswith("eyJ") and key.count(".") == 2:
+            key_kind = "jwt"
+            try:
+                payload_b64 = key.split(".")[1]
+                payload_b64 += "=" * (-len(payload_b64) % 4)
+                payload = json.loads(base64.urlsafe_b64decode(payload_b64).decode("utf-8"))
+                jwt_role = payload.get("role")
+                jwt_ref_matches_url = bool(url_ref and payload.get("ref") == url_ref)
+            except Exception:
+                key_kind = "malformed_jwt"
+        elif key.startswith("sb_secret_"):
+            key_kind = "sb_secret"
+        elif key.startswith("sbp_"):
+            key_kind = "sbp_access_token_wrong"
+        elif key.startswith("sb_publishable_"):
+            key_kind = "sb_publishable_wrong"
+        else:
+            key_kind = "other"
+
     return {
         "status": "ok",
         "backend": get_storage_backend(),
-        "supabase_url_set": bool(get_supabase_url()),
-        "supabase_service_key_set": bool(get_supabase_service_role_key()),
+        "supabase_host": host,
+        "supabase_url_set": bool(url),
+        "supabase_service_key_set": bool(key),
+        "key_kind": key_kind,
+        "key_len": len(key),
+        "jwt_role": jwt_role,
+        "jwt_ref_matches_url": jwt_ref_matches_url,
     }
