@@ -1,5 +1,5 @@
 const NOTICE_DISMISSED_KEY = "comlicense_notice_dismissed";
-const MAX_FILE_BYTES = 20 * 1024 * 1024;
+const MAX_FILE_BYTES = 4 * 1024 * 1024;
 const ALLOWED_EXTS = new Set([".xlsx", ".xlsm"]);
 
 const LECTURE_GUIDE_MODULES = [
@@ -119,7 +119,7 @@ function setupValidationAnnouncer(form) {
         } else if (file.size === 0) {
           el.setCustomValidity("빈 파일은 채점할 수 없습니다.");
         } else if (file.size > MAX_FILE_BYTES) {
-          el.setCustomValidity("파일 크기가 20MB 제한을 초과했습니다.");
+          el.setCustomValidity("파일 크기가 4MB 제한을 초과했습니다.");
         } else {
           el.setCustomValidity("");
         }

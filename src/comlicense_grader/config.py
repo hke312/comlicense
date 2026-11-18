@@ -85,7 +85,7 @@ def is_cookie_secure() -> bool:
 
 
 SESSION_COOKIE_NAME: str = "comlicense_session"
-MAX_UPLOAD_SIZE_BYTES: int = 20 * 1024 * 1024  # 20 MB
+MAX_UPLOAD_SIZE_BYTES: int = 4 * 1024 * 1024  # 4 MB (Vercel payload limit safe)
 ALLOWED_EXTENSIONS: frozenset[str] = frozenset({".xlsx", ".xlsm"})
 
 PASS_THRESHOLD: int = 70

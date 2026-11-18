@@ -422,3 +422,18 @@ def test_supabase_repository_rest_integration_with_mock_transport() -> None:
     assert history[0].scores.total == 90
     assert history[0].deductions[0].task_name == "계산작업-1"
     assert ("POST", "/rest/v1/submission_deductions") in calls
+
+
+def test_vercel_entrypoint_and_config_valid() -> None:
+    import importlib.util
+
+    root_dir = Path(__file__).resolve().parents[1]
+    vercel_cfg = json.loads((root_dir / "vercel.json").read_text(encoding="utf-8"))
+    assert "api/index.py" in vercel_cfg["functions"]
+    assert vercel_cfg["rewrites"][0]["destination"] == "/api/index"
+
+    spec = importlib.util.spec_from_file_location("vercel_index", root_dir / "api" / "index.py")
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    assert module.app is app

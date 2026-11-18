@@ -61,3 +61,11 @@ uv run uvicorn comlicense_grader.main:app --reload
 ```powershell
 uv run pytest -v
 ```
+
+## Vercel 배포 안내
+
+저장소 루트에 Vercel 진입점(`api/index.py`)과 번들·라우팅 설정(`vercel.json`)이 포함되어 있습니다.
+
+1. Vercel에서 `hke312/comlicense` 저장소를 Import 합니다.
+2. **Environment Variables**에 `.env.example` 항목(`SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `COMLICENSE_STORAGE_BACKEND=supabase`, `COMLICENSE_COOKIE_SECURE=true`)을 등록합니다.
+3. Vercel Functions의 요청 본문 제한(4.5MB)에 맞춰 업로드 제한은 4MB로 설정되어 있습니다.

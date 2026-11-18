@@ -294,7 +294,7 @@ async def grade_submission(
     if len(content) > MAX_UPLOAD_SIZE_BYTES:
         raise HTTPException(
             status_code=413,
-            detail="파일 크기가 제한(20MB)을 초과했습니다.",
+            detail="파일 크기가 제한(4MB)을 초과했습니다.",
         )
 
     engine = get_engine()
