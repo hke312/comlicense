@@ -429,10 +429,10 @@ def test_vercel_entrypoint_and_config_valid() -> None:
 
     root_dir = Path(__file__).resolve().parents[1]
     vercel_cfg = json.loads((root_dir / "vercel.json").read_text(encoding="utf-8"))
-    assert "api/index.py" in vercel_cfg["functions"]
-    assert vercel_cfg["rewrites"][0]["destination"] == "/api/index"
+    assert "main.py" in vercel_cfg["functions"]
+    assert "rewrites" not in vercel_cfg
 
-    spec = importlib.util.spec_from_file_location("vercel_index", root_dir / "api" / "index.py")
+    spec = importlib.util.spec_from_file_location("vercel_main", root_dir / "main.py")
     assert spec is not None and spec.loader is not None
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
