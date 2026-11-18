@@ -10,7 +10,12 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
 from comlicense_grader.api.routes import router as api_router
-from comlicense_grader.config import STATIC_DIR, get_storage_backend
+from comlicense_grader.config import (
+    STATIC_DIR,
+    get_storage_backend,
+    get_supabase_service_role_key,
+    get_supabase_url,
+)
 from comlicense_grader.db.repository import get_repository
 from comlicense_grader.grader.engine import get_engine
 
@@ -60,6 +65,11 @@ async def page_criteria() -> FileResponse:
 
 
 @app.get("/health", tags=["system"])
-async def health_check() -> dict[str, str]:
+async def health_check() -> dict[str, object]:
     """Simple health check endpoint."""
-    return {"status": "ok", "backend": get_storage_backend()}
+    return {
+        "status": "ok",
+        "backend": get_storage_backend(),
+        "supabase_url_set": bool(get_supabase_url()),
+        "supabase_service_key_set": bool(get_supabase_service_role_key()),
+    }

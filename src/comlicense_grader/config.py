@@ -43,14 +43,20 @@ def get_db_path() -> Path:
     return DATA_DIR / "comlicense.db"
 
 
+def _clean_env_value(raw: str) -> str:
+    return raw.strip().strip('"').strip("'").replace("\r", "").replace("\n", "")
+
+
 def get_supabase_url() -> str:
     """Return the configured Supabase project URL, or empty string if unset."""
-    return os.getenv("SUPABASE_URL", "").strip().rstrip("/")
+    raw = os.getenv("SUPABASE_URL") or os.getenv("NEXT_PUBLIC_SUPABASE_URL") or ""
+    return _clean_env_value(raw).rstrip("/")
 
 
 def get_supabase_service_role_key() -> str:
     """Return the configured Supabase service_role key, or empty string if unset."""
-    return os.getenv("SUPABASE_SERVICE_ROLE_KEY", "").strip()
+    raw = os.getenv("SUPABASE_SERVICE_ROLE_KEY") or os.getenv("SUPABASE_SECRET_KEY") or ""
+    return _clean_env_value(raw)
 
 
 def get_storage_backend() -> Literal["supabase", "sqlite"]:

@@ -440,11 +440,12 @@ dialog::backdrop {
 }
 
 .auth-dialog-header {
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
-  padding: 1rem 1.25rem;
+  padding: 0.9rem 1.25rem;
   border-block-end: 1px solid var(--border-color);
 }
 
@@ -474,10 +475,12 @@ dialog::backdrop {
 }
 
 .auth-tabs {
+  flex-shrink: 0;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.35rem;
-  padding: 0.75rem 1.25rem 0;
+  padding: 0.75rem 1.25rem;
+  border-block-end: 1px solid var(--border-color);
 }
 
 .auth-tab-btn {
@@ -499,7 +502,9 @@ dialog::backdrop {
 }
 
 .auth-dialog-body {
-  padding: 1rem 1.25rem 1.25rem;
+  flex: 1 1 auto;
+  min-block-size: 0;
+  padding: 0.95rem 1.25rem 1.2rem;
   overflow: auto;
 }
 

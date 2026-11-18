@@ -32,11 +32,12 @@ class SupabaseRepository:
     """Supabase REST API storage for student accounts, sessions, and graded submissions."""
 
     def __init__(self, supabase_url: str, service_role_key: str) -> None:
-        self.supabase_url = supabase_url.rstrip("/")
-        self.rest_url = f"{self.supabase_url}/rest/v1"
+        self.supabase_url = supabase_url.strip().rstrip("/")
+        self.service_role_key = service_role_key.strip()
+        self.rest_url = f"{self.supabase_url}/rest/v1" if self.supabase_url else "/rest/v1"
         self.headers = {
-            "apikey": service_role_key,
-            "Authorization": f"Bearer {service_role_key}",
+            "apikey": self.service_role_key,
+            "Authorization": f"Bearer {self.service_role_key}",
             "Content-Type": "application/json",
         }
         self._client = httpx.Client(
@@ -54,6 +55,15 @@ class SupabaseRepository:
         json_body: Any = None,
         extra_headers: dict[str, str] | None = None,
     ) -> httpx.Response:
+        if not self.supabase_url or not self.service_role_key:
+            missing = []
+            if not self.supabase_url:
+                missing.append("SUPABASE_URL")
+            if not self.service_role_key:
+                missing.append("SUPABASE_SERVICE_ROLE_KEY")
+            raise RepositoryConnectionError(
+                f"서버 환경 변수({', '.join(missing)})가 비어 있습니다. Vercel Environment Variables 설정 후 Redeploy 해 주세요."
+            )
         headers = dict(self.headers)
         if extra_headers:
             headers.update(extra_headers)
